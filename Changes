@@ -1,5 +1,8 @@
 Revision history for Flickr-Tools
 
+0.03    08 August 2015
+        Begin the process of migrating these modules to Cal Henderson's Flickr::API
+
 0.02    17 June 2005
         Solved a minor bug in the documentation of the Flickr::API::Photosets module;
         Added the 'photos' method to the Flickr::Photoset class;

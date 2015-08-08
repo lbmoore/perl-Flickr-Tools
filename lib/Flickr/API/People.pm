@@ -13,11 +13,11 @@ Flickr::API::People - The Perl interface to the Flickr API's flickr.people.* met
 
 =head1 VERSION
 
-Version 0.01
+Version 0.03
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.03';
 my $DEBUG;
 
 =head1 SYNOPSIS

@@ -1,5 +1,11 @@
 Flickr-Tools
 
+These modules are being integrated with the Flickr::API distribution started by
+Cal Henderson.
+
+
+
+
 These modules provide a set of classes that can be used to work with Flickr, using it's REST API, as provided by the Flickr::API.
 
 The object of this set of classes is to take the "raw" interface that the Flickr::API provides and turn it into a more usable set of objects which are easier and faster to use, while providing full access to all the functionality provided by Flickr.
