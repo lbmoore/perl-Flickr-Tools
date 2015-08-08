@@ -1,0 +1,12 @@
+Revision history for Flickr-Tools
+
+0.02    17 June 2005
+        Solved a minor bug in the documentation of the Flickr::API::Photosets module;
+        Added the 'photos' method to the Flickr::Photoset class;
+        Added the 'photosets' method to the Flickr::Person class;
+        Added pre_loading of data during object initialization to the Flickr::Photo class.
+
+
+0.01    16 June 2005
+        First version, released on an unsuspecting world.
+

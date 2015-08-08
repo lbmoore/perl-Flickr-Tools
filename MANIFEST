@@ -1,0 +1,23 @@
+Build.PL
+Makefile.PL
+Changes
+MANIFEST
+META.yml # Will be created by "make dist"
+README
+TODO
+lib/Flickr/API/Utils.pm
+lib/Flickr/API/Photos.pm
+lib/Flickr/API/Photosets.pm
+lib/Flickr/API/People.pm
+lib/Flickr/Testing.pm
+lib/Flickr/Photo.pm
+lib/Flickr/Photoset.pm
+lib/Flickr/Person.pm
+t/00-load.t
+t/10-api-utils.t
+t/11-api-people.t
+t/11-api-photos.t
+t/11-api-photosets.t
+t/12-person.t
+t/pod-coverage.t
+t/pod.t
