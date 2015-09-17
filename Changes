@@ -1,5 +1,9 @@
 Revision history for Flickr-Tools
 
+0.04    17 September 2015
+        Continue process of migrating these modules to Cal Henderson's Flickr::API
+        People and Person moving over
+
 0.03    08 August 2015
         Begin the process of migrating these modules to Cal Henderson's Flickr::API
 

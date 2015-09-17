@@ -13,11 +13,11 @@ Flickr::API::Photos - The Perl interface to the Flickr API's flickr.photos.* met
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 my $DEBUG;
 
 =head1 SYNOPSIS
