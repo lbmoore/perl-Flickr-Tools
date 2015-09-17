@@ -1,43 +1,54 @@
 package Flickr::Tools;
 
 use strict;
+use warnings;
+use Carp;
+use Storable qw(store_fd retrieve_fd);
 
-=head1 NAME
+our $VERSION = '1.19';
 
-Flickr::Tools - Private module to aid in migration into Flickr::API.
 
-=head1 VERSION
-
-Version 0.04
-
-=cut
-
-our $VERSION = '0.04';
-
-=head1 SYNOPSIS
-
-This is an internal module, you don't want to use it and shouldn't depend on its existance.
-
-=cut
-
-=head1 FUNCTIONS
-
-=head2 new
-
-Don't use this or expect it to exist in the future.
-
-=cut
 
 sub new {
 
     my $class = shift;
-    my $params = shift;
+    my $self = {};
 
-    my $self = $params;
+    $self->{Tools} = $VERSION;
+
     bless $self, $class;
 
- return $self;
-
+    return $self;
 }
 
+
+
 1;
+
+__END__
+
+=head1 NAME
+
+Flickr::Tools - Tools to assist using the Flickr API
+
+=head1 SYNOPSIS
+
+This is a place holder for some configuration and persistence methods
+needed a little bit further down the line.
+
+=head1 LICENSE AND COPYRIGHT
+
+
+Copyright (C) 2014-2015 Louis B. Moore <lbmoore@cpan.org>
+
+
+This program is released under the Artistic License 2.0 by The Perl Foundation.
+
+=head1 SEE ALSO
+
+L<Flickr|http://www.flickr.com/>,
+L<http://www.flickr.com/services/api/>
+L<https://www.flickr.com/services/api/auth.oauth.html>
+L<https://github.com/iamcal/perl-Flickr-API>
+
+=cut
