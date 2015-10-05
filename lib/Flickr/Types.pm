@@ -1,22 +1,29 @@
-package Flickr::Type;
-
+package Flickr::Types;
 use warnings;
 use strict;
 use Carp;
 
-use version; $VERSION = qv('0.0.3');
+our $VERSION = '1.19';
 
-# Other recommended modules (uncomment to use):
-#  use IO::Prompt;
-#  use Perl6::Export;
-#  use Perl6::Slurp;
-#  use Perl6::Say;
-
-
-# Module implementation here
+use Type::Library
+   -base,
+   -declare => qw( Personsearch Personuser );
+use Type::Utils -all;
+use Types::Standard -types;
 
 
-1; # Magic true value required at end of module
+declare Personsearch,
+   as Dict[
+      email     => Optional[Str],
+      username  => Optional[Str],
+   ];
+
+declare Personuser,
+    as HashRef;
+
+
+
+1;
 __END__
 
 =head1 NAME

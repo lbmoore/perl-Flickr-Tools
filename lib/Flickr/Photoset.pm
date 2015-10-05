@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use Flickr::API::Photosets;
+#use Flickr::API::Photosets;
 use Flickr::Person;
 use Flickr::Photo;
 
@@ -14,11 +14,11 @@ Flickr::Photoset - Represents a photoset on Flickr.
 
 =head1 VERSION
 
-Version 0.04
+Version 1.19
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '1.19';
 
 =head1 SYNOPSIS
 

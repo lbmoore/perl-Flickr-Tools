@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use Flickr::API::Photos;
+#use Flickr::API::Photos;
 use Flickr::Person;
 
 =head1 NAME
@@ -13,11 +13,11 @@ Flickr::Photo - Represents a photo on Flickr.
 
 =head1 VERSION
 
-Version 0.04
+Version 1.19
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '1.19';
 
 =head1 SYNOPSIS
 
