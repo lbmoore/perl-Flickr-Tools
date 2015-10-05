@@ -1,11 +1,12 @@
-use Test::More tests => 7;
+use Test::More tests => 4;
 
 BEGIN {
-use_ok( 'Flickr::API::Utils' );
-use_ok( 'Flickr::API::Photos' );
-use_ok( 'Flickr::API::People' );
-use_ok( 'Flickr::API::Photosets' );
+use_ok( 'Flickr::Tools' );
+use_ok( 'Flickr::Person' );
+use_ok( 'Flickr::Type' );
 use_ok( 'Flickr::Photo' );
 use_ok( 'Flickr::Photoset' );
 use_ok( 'Flickr::Person' );
 }
+
+diag( "Testing Flickr::Tools $Flickr::Tools::VERSION" );

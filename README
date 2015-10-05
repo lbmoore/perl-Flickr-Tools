@@ -34,12 +34,9 @@ To install this module, run the following commands:
     make install
 
 
-Alternatively, to install with Module::Build, you can use the following commands:
+DEPENDENCIES
 
-    perl Build.PL
-    ./Build
-    ./Build test
-    ./Build install
+None.
 
 
 COPYRIGHT AND LICENCE

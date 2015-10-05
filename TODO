@@ -1,5 +1,23 @@
 Flickr-Tools to-dos and ideas for future developments.
 
+
+As of 1.20:
+
+Short term: 
+
+* integrate closely with Flickr::API distribution
+* Split out the Flickr::API::* classes and move to Flickr::API
+* move codebase to Moo 
+* Re-vivify Flickr::Tools
+
+Long Term: 
+
+* Go through older To-Dos and either do or drop them.
+* build in all of the flickr api, and, perhaps, automate building some of these
+  with flickr.reflection.* methods.
+
+
+
 As of release 0.02:
 
 - No new To-Dos added for this version.
