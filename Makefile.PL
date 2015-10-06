@@ -8,15 +8,19 @@ WriteMakefile(
     VERSION_FROM        => 'lib/Flickr/Tools.pm',
     ABSTRACT_FROM       => 'lib/Flickr/Tools.pm',
     PL_FILES            => {},
+    'META_MERGE'        => {
+        resources => {
+            repository  =>  'https://github.com/lbmoore/perl-Flickr-Tools',
+        },
+    },
     PREREQ_PM => {
         'Test::More' => 0,
         'Flickr::API' => 0,
         'Carp' => 0,
         'Moo' => 0,
-        'storable' => 0,
         'namespace::clean' => 0,
         'Type::Library' => 0,
-        'Type::Util' => 0,
+        'Type::Utils' => 0,
         'Types::Standard' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
