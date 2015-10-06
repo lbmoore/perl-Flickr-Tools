@@ -1,2 +1,4 @@
 # perl-Flickr-Tools
-Blend Nuno Filipe Monteiro Nunes' Flickr Tools in with Cal Henderson's Flickr::API
+
+Update Nuno Filipe Monteiro Nunes' Flickr Tools. Split some into
+Cal Henderson's Flickr::API

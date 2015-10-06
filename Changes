@@ -1,19 +1,28 @@
 Revision history for Flickr-Tools
 
+1.20    05 October 2015
+ * Realizing that there is benefit to keeping Flickr::API as close to
+   perl core as practical and letting Flickr::Tools use Moo and more
+   abstraction, stopped moving all of Flickr::Tools into Flickr::API.
+ * Started process of getting the Flickr::Tools namespace ready for
+   the future. This means breaking a lot of what once was, but now isn't.
+
+1.19    Mistake
+
 0.04    17 September 2015
-        Continue process of migrating these modules to Cal Henderson's Flickr::API
-        People and Person moving over
+ * Continue process of migrating these modules to Cal Henderson's Flickr::API
+   People and Person moving over
 
 0.03    08 August 2015
-        Begin the process of migrating these modules to Cal Henderson's Flickr::API
+ * Begin the process of migrating these modules to Cal Henderson's Flickr::API
 
 0.02    17 June 2005
-        Solved a minor bug in the documentation of the Flickr::API::Photosets module;
-        Added the 'photos' method to the Flickr::Photoset class;
-        Added the 'photosets' method to the Flickr::Person class;
-        Added pre_loading of data during object initialization to the Flickr::Photo class.
+ * Solved a minor bug in the documentation of the Flickr::API::Photosets module;
+ * Added the 'photos' method to the Flickr::Photoset class;
+ * Added the 'photosets' method to the Flickr::Person class;
+ * Added pre_loading of data during object initialization to the Flickr::Photo class.
 
 
 0.01    16 June 2005
-        First version, released on an unsuspecting world.
+ * First version, released on an unsuspecting world.
 

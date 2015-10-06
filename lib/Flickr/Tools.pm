@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Storable qw(store_fd retrieve_fd);
 
-our $VERSION = '1.19';
+our $VERSION = '1.20';
 
 
 
@@ -43,6 +43,7 @@ Copyright (C) 2014-2015 Louis B. Moore <lbmoore@cpan.org>
 
 
 This program is released under the Artistic License 2.0 by The Perl Foundation.
+L<http://www.perlfoundation.org/artistic_license_2_0>
 
 =head1 SEE ALSO
 

@@ -1,30 +1,53 @@
 Flickr-Tools
 
-These modules are being integrated with the Flickr::API distribution started by
-Cal Henderson.
+Some of these modules are being integrated with the Flickr::API distribution started by
+Cal Henderson. The rest are being reworked to follow more current practice.
 
 
 
+These modules provide a set of classes that can be used to work with Flickr, 
+using it's REST API, as provided by the Flickr::API.
 
-These modules provide a set of classes that can be used to work with Flickr, using it's REST API, as provided by the Flickr::API.
+The object of this set of classes is to take the "raw" interface that the 
+Flickr::API provides and turn it into a more usable set of objects which 
+are easier and faster to use, while providing full access to all the 
+functionality provided by Flickr.
 
-The object of this set of classes is to take the "raw" interface that the Flickr::API provides and turn it into a more usable set of objects which are easier and faster to use, while providing full access to all the functionality provided by Flickr.
+This distribution formerly provided two sets of classes:
 
-This distribution provides two sets of classes:
+-> The Flickr::API::* modules (eg: Flickr::API::Photos, Flickr::API::People) 
+provide a lower-level way to access the information. They essentially get the 
+output from the Flickr::API module and transform in into a cleaner, easier to 
+work with hash. These modules are essentially there to be used by the next 
+set of modules, but they may be used directly if you should wish to do so.
 
--> The Flickr::API::* modules (eg: Flickr::API::Photos, Flickr::API::People) provide a lower-level way to access the information. They essentially get the output from the Flickr::API module and transform in into a cleaner, easier to work with hash. These modules are essentially there to be used by the next set of modules, but they may be used directly if you should wish to do so.
+These modules are moving into Flickr::API
 
--> The Flickr::* modules (eg: Flickr::Person, Flickr::Photo) provide higher-level access to the information on a photo, person, etc. This is the preferred interface that the common user is expected to use.
+
+
+-> The Flickr::* modules (eg: Flickr::Person, Flickr::Photo) provide higher-level 
+access to the information on a photo, person, etc. This is the preferred interface 
+that the common user is expected to use.
+
+These modules are continuing in Flickr::Tools.
+
+
 
 STATUS
 
-This is an early release of the distribution and there are only a limited number of methods available at the moment.
+This is an early release of the distribution and there are only a limited 
+number of methods available at the moment.
 
-Also, this is a "testing the waters" version and while I hope the API of the objects will not change much in the future I cannot make any promises at this time.
+Also, this is a "testing the waters" version. I expect the API of the objects 
+will change.
 
-Read the TODO file for the plans for the future of this distribution.
+Read the TODO file for the plans for the future of this distribution. 
+
+
 
 INSTALLATION
+
+You probably don't want to install v1.20 of Flickr::Tools
 
 To install this module, run the following commands:
 
@@ -36,14 +59,18 @@ To install this module, run the following commands:
 
 DEPENDENCIES
 
-None.
+Flickr::API
+Moo
 
 
 COPYRIGHT AND LICENCE
 
-Put the correct copyright and license information here.
-
-Copyright (C) 2005 Nuno Nunes
+Copyright (C) 2005 Nuno Nunes (effectively versions < 1.0)
+Copyright (c) 2015 Louis B. Moore (effectively versions >= 1.0)
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+This is clarified as being under the Perl Foundation Artistic License 2
+
+
