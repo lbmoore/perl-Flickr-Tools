@@ -5,6 +5,7 @@ use Carp;
 use Moo;
 use namespace::clean;
 
+our $VERSION = '1.21';
 
 has api => (
     is  => 'ro',

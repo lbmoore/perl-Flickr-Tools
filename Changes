@@ -1,5 +1,8 @@
 Revision history for Flickr-Tools
 
+1.21    05 October 2015
+ * Fix embarrassing version number goof
+
 1.20    05 October 2015
  * Realizing that there is benefit to keeping Flickr::API as close to
    perl core as practical and letting Flickr::Tools use Moo and more

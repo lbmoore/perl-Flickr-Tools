@@ -14,11 +14,11 @@ Flickr::Photoset - Represents a photoset on Flickr.
 
 =head1 VERSION
 
-Version 1.20
+Version 1.21
 
 =cut
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 =head1 SYNOPSIS
 

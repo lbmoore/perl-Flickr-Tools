@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 use Type::Library
    -base,
@@ -35,7 +35,7 @@ Flickr::Types Type definitions to use with Moo in the Flickr::Tools family
 
 =head1 VERSION
 
-This document describes Flickr::Types Version 1.20
+This document describes Flickr::Types Version 1.21
 
 
 =head1 SYNOPSIS

@@ -5,7 +5,7 @@ use warnings;
 use Carp;
 use Storable qw(store_fd retrieve_fd);
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 
 
