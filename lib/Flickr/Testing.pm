@@ -10,11 +10,11 @@ Flickr::Testing - Private module for use with the tests.
 
 =head1 VERSION
 
-Version 1.22
+Version 1.21_01
 
 =cut
 
-our $VERSION = '1.22';
+our $VERSION = '1.21_01';
 
 =head1 SYNOPSIS
 

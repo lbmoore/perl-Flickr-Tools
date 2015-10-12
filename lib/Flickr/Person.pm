@@ -5,9 +5,9 @@ use Types::Standard -types;
 use Carp;
 use Moo;
 use strictures 2;
-#use namespace::clean;
+use namespace::clean;
 
-our $VERSION = '1.22';
+our $VERSION = '1.21_01';
 
 has api => (
     is  => 'ro',

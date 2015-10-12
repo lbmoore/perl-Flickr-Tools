@@ -46,6 +46,8 @@ WriteMakefile(
     AUTHOR              => 'Louis B. Moore <lbmoore@cpan.org>',
     VERSION_FROM        => 'lib/Flickr/Tools.pm',
     ABSTRACT_FROM       => 'lib/Flickr/Tools.pm',
+    'LICENSE'           => 'artistic2',
+    'MIN_PERL_VERSION'  => '5.010',
     PL_FILES            => {},
     'META_MERGE'        => {
         resources => {
@@ -53,15 +55,21 @@ WriteMakefile(
         },
     },
     PREREQ_PM => {
-        'Test::More' => 0,
-        'Flickr::API' => 0,
         'Carp' => 0,
+        'Flickr::API' => 0,
         'Moo' => 0,
         'Moo::Role' => 0,
-        'namespace::clean' => 0,
+        'Test::More' => 0,
+        'Test::TypeTiny' => 0,
         'Type::Library' => 0,
+        'Type::Params' => 0,
         'Type::Utils' => 0,
         'Types::Standard' => 0,
+        'namespace::clean' => 0,
+        'strictures' => 0,
+    },
+    'TEST_REQUIRES'  =>  {
+        'Test::TypeTiny' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Flickr-Tools-*' },

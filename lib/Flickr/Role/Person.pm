@@ -8,6 +8,7 @@ use 5.010;
 use Moo::Role;
 use strictures 2;
 
+our $VERSION = '1.21_01';
 
 around 'getGroups' => sub {
 
