@@ -1,7 +1,18 @@
-Flickr-Tools
+Flickr::Tools
+=============
 
 Some of these modules are being integrated with the Flickr::API distribution started by
 Cal Henderson. The rest are being reworked to follow more current practice.
+
+
+
+A NOTE ON TESTING
+
+Many of the tests require some information from you. 
+
+
+make test MAKETEST_OAUTH_CFG=$HOME/oauth-testing.st [TEST_VERBOSE=1]
+ MAKETEST_VALUES=$HOME/values_file
 
 
 
@@ -47,7 +58,7 @@ Read the TODO file for the plans for the future of this distribution.
 
 INSTALLATION
 
-You probably don't want to install v1.21 of Flickr::Tools
+You probably don't want to install v1.22 of Flickr::Tools
 
 To install this module, run the following commands:
 

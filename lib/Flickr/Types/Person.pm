@@ -1,28 +1,28 @@
-package Flickr::Types;
+package Flickr::Types::Person;
 
-use warnings;
-use strict;
+use strictures 2;
 use Carp;
 
-our $VERSION = '1.21';
+our $VERSION = '1.22';
 
 use Type::Library
    -base,
-   -declare => qw( Personsearch Personuser );
+   -declare => qw( PersonSearchDict GroupsArgList );
 use Type::Utils -all;
 use Types::Standard -types;
 
 
-declare Personsearch,
+declare PersonSearchDict,
    as Dict[
       email     => Optional[Str],
       username  => Optional[Str],
    ];
 
-declare Personuser,
-    as HashRef;
-
-
+declare 'GroupsArgList',
+   as Dict[
+      user_id   => Optional[Str],
+      extras    => Optional[ArrayRef[Enum[qw(privacy throttle restrictions)]]],
+   ];
 
 1;
 
@@ -30,35 +30,30 @@ __END__
 
 =head1 NAME
 
-Flickr::Types Type definitions to use with Moo in the Flickr::Tools family
+Flickr::Types::Person Type definitions
 
 
 =head1 VERSION
 
-This document describes Flickr::Types Version 1.21
+This document describes Flickr::Types Version 1.22
 
 
 =head1 SYNOPSIS
 
-    use Flickr::Types qw( Personsearch Personuser);
+    use Flickr::Types qw( PersonSearchDict );
     use Moo;
 
     has searchkey => (
         is   => 'rw',
-        isa  => Personsearch,
+        isa  => PersonSearchDict,
         required => 1,
-    );
-
-    has user => (
-        is => 'rwp',
-        isa => Personuser,
     );
 
 
 
 =head1 DESCRIPTION
 
-Type declarations used in various Flickr::Tools modules
+Type declarations used in various Flickr Person modules
 
 
 =head1 DEPENDENCIES

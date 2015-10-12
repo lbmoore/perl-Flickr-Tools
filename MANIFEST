@@ -3,13 +3,16 @@ ignore.txt
 lib/Flickr/Person.pm
 lib/Flickr/Photo.pm
 lib/Flickr/Photoset.pm
+lib/Flickr/Role/Person.pm
 lib/Flickr/Testing.pm
 lib/Flickr/Tools.pm
-lib/Flickr/Types.pm
+lib/Flickr/Types/Person.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
 README
 README.md
 t/00-load.t
+t/01-types.t
+t/02-person.t
 TODO
