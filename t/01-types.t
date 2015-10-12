@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 use Test::TypeTiny;
 use Types::Standard qw( HashRef );
-use Flickr::Types qw( PersonSearchDict );
+use Flickr::Types::Person qw( PersonSearchDict );
 
 my $emailkey = {'email'    => 'buzz@aldrin.com'};
 my $userkey  = {'username' => 'blissfullylost'};
