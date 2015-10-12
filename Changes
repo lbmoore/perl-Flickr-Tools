@@ -1,7 +1,8 @@
 Revision history for Flickr-Tools
 
-1.22    xx October 2015
- * Move 
+1.21_01 12 October 2015
+ * Move Types.pm to a directory filled with Types/module.pm
+ * Now with Roles!
 
 1.21    05 October 2015
  * Fix embarrassing version number goof
