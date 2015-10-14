@@ -45,9 +45,9 @@ SKIP: {
     my $values_file  = $ENV{MAKETEST_VALUES};
 
     $person = Flickr::Tools::Person->new({api => $api, searchkey => {email => 'spud@nowhere.nohow.noway.no'}});
-    isa_ok($person, 'Flickr::Person');
+    isa_ok($person, 'Flickr::Tools::Person');
 
-    is($person->exists, 0, 'Was the Flickr::Tools::Person a properly unsuccessful Flickr::Person');
+    is($person->exists, 0, 'Was the Flickr::Tools::Person a properly unsuccessful Flickr::Tools::Person');
 
     my $valsflag=0;
     if (-r $values_file) { $valsflag = 1; }
@@ -71,7 +71,7 @@ SKIP: {
             skip "Skipping email search tests, no email in values file", 1
                 if $peoplevalues{'search_email'} eq '';
 
-            $person = Flickr::Person->new({api => $api, searchkey => {email => $peoplevalues{'search_email'}}});
+            $person = Flickr::Tools::Person->new({api => $api, searchkey => {email => $peoplevalues{'search_email'}}});
 
             is($person->exists, 1, 'Does the email searched Flickr::Person exist');
 
