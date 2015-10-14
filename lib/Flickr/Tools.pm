@@ -1,26 +1,21 @@
 package Flickr::Tools;
 
-use strict;
-use warnings;
+use Flickr::Types::Tools qw( FlickrAPI );
+
 use Carp;
-use Storable qw(store_fd retrieve_fd);
+use Moo;
+use strictures 2;
+use namespace::clean;
 
-our $VERSION = '1.21_01';
+our $VERSION = '1.21_02';
 
 
+has api => (
+    is  => 'ro',
+    isa => FlickrAPI,
+    required => 1,
 
-sub new {
-
-    my $class = shift;
-    my $self = {};
-
-    $self->{Tools} = $VERSION;
-
-    bless $self, $class;
-
-    return $self;
-}
-
+);
 
 
 1;

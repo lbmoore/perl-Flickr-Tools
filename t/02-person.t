@@ -2,11 +2,11 @@ use strict;
 use warnings;
 use Test::More;
 use Flickr::API::People;
-use Flickr::Person;
+use Flickr::Tools::Person;
 
 if (defined($ENV{MAKETEST_OAUTH_CFG}) && defined ($ENV{MAKETEST_VALUES})) {
 
-    plan( tests => 9 );
+#    plan( tests => 9 );
 }
 else {
     plan(skip_all => 'Person tests require that MAKETEST_OAUTH_CFG and MAKETEST_VALUES are defined, see README.');
@@ -44,10 +44,10 @@ SKIP: {
 
     my $values_file  = $ENV{MAKETEST_VALUES};
 
-    $person = Flickr::Person->new({api => $api, searchkey => {email => 'spud@nowhere.nohow.noway.no'}});
+    $person = Flickr::Tools::Person->new({api => $api, searchkey => {email => 'spud@nowhere.nohow.noway.no'}});
     isa_ok($person, 'Flickr::Person');
 
-    is($person->exists, 0, 'Was the Flickr::Person a properly unsuccessful Flickr::Person');
+    is($person->exists, 0, 'Was the Flickr::Tools::Person a properly unsuccessful Flickr::Person');
 
     my $valsflag=0;
     if (-r $values_file) { $valsflag = 1; }
@@ -77,17 +77,15 @@ SKIP: {
 
 
             my $info = $person->getInfo();
-    #        use Data::Dumper::Simple;
-     #       warn Dumper($info);
 
         }
       SKIP: {
             skip "Skipping username search tests, no username in values file", 1
                 if $peoplevalues{'search_user'} eq '';
 
-            $person = Flickr::Person->new({api => $api, searchkey => {username => $peoplevalues{'search_user'}}});
+            $person = Flickr::Tools::Person->new({api => $api, searchkey => {username => $peoplevalues{'search_user'}}});
 
-            is($person->exists, 1, 'Does the username searched Flickr::Person exist');
+            is($person->exists, 1, 'Does the username searched Flickr::Tools::Person exist');
 
             my $groups = $person->getGroups({extras => [qw(privacy throttle)]});
 

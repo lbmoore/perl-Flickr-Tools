@@ -1,32 +1,20 @@
-package Flickr::Types::Person;
+package Flickr::Types::Tools;
 
 use strictures 2;
 use Carp;
 
 our $VERSION = '1.21_02';
 
-use Flickr::Types::Tools;
 use Type::Library
    -base,
-   -declare => qw( PersonSearchDict GroupsArgList  FlickrAPIPeople );
+   -declare => qw( FlickrAPI );
 use Type::Utils -all;
 use Types::Standard -types;
 
 
-declare PersonSearchDict,
-   as Dict[
-      email     => Optional[Str],
-      username  => Optional[Str],
-   ];
+declare FlickrAPI,
+    as InstanceOf["Flickr::API"];
 
-declare FlickrAPIPeople,
-    as InstanceOf["Flickr::API::People"];
-
-declare GroupsArgList,
-   as Dict[
-      user_id   => Optional[Str],
-      extras    => Optional[ArrayRef[Enum[qw(privacy throttle restrictions)]]],
-   ];
 
 1;
 

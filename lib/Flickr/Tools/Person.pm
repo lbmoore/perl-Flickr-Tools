@@ -1,19 +1,19 @@
-package Flickr::Person;
+package Flickr::Tools::Person;
+use 5.010;
 
-use Flickr::Types::Person qw( PersonSearchDict );
+use Flickr::Types::Person qw( FlickrAPIPeople PersonSearchDict GroupsArgList );
 use Types::Standard -types;
+use Type::Params qw( compile );
 use Carp;
 use Moo;
 use strictures 2;
 use namespace::clean;
 
-our $VERSION = '1.21_01';
+our $VERSION = '1.21_02';
 
 has api => (
     is  => 'ro',
-    isa => sub { confess "$_[0] is not a Flickr::API::People",
-                     if (ref($_[0]) ne 'Flickr::API::People');
-             },
+    isa => FlickrAPIPeople,
     required => 1,
 
 );
@@ -41,7 +41,6 @@ has exists  => (
     default =>  0,
 );
 
-with('Flickr::Role::Person');
 
 
 sub BUILD {
@@ -83,6 +82,7 @@ sub BUILD {
 
 sub getGroups {
 
+    state $check = compile( FlickrAPIPeople, GroupsArgList );
     my ($self,$args) = @_;
 
     my $api  = $self->api;
