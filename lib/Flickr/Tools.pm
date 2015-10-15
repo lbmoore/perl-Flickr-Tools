@@ -31,6 +31,20 @@ Flickr::Tools - Tools to assist using the Flickr API
 This is a place holder for some configuration and persistence methods
 needed a little bit further down the line.
 
+  my $api  = Flickr::API->import_storable_config($config_file);
+
+  my $tool = Flickr::Tool->new({api => $api});
+
+=head1 METHODS
+
+=over
+
+=item C<new>
+
+Returns a new Tool
+
+=back
+
 =head1 LICENSE AND COPYRIGHT
 
 

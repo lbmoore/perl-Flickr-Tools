@@ -87,8 +87,11 @@ SKIP: {
 
             is($person->exists, 1, 'Does the username searched Flickr::Tools::Person exist');
 
-            my $groups = $person->getGroups({extras => [qw(privacy throttle)]});
+            my $groups = $person->getGroups({user_id => $api->nsid, extras => [qw(privacy throttle)]});
 
+
+            use Data::Dumper::Simple;
+            warn Dumper($groups);
         }
     } # vals File
 }

@@ -36,7 +36,7 @@ These modules are moving into Flickr::API
 
 
 
--> The Flickr::* modules (eg: Flickr::Person, Flickr::Photo) provide higher-level 
+-> The Flickr::Tools::* modules (eg: Flickr::Tools::Person, Flickr::Tools::Photo) provide higher-level 
 access to the information on a photo, person, etc. This is the preferred interface 
 that the common user is expected to use.
 
@@ -72,6 +72,8 @@ DEPENDENCIES
 
 Flickr::API
 Moo
+Type::Tiny
+Perl 5.10 and later
 
 
 COPYRIGHT AND LICENCE

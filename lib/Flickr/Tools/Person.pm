@@ -1,7 +1,7 @@
 package Flickr::Tools::Person;
 use 5.010;
 
-use Flickr::Types::Person qw( FlickrAPIPeople PersonSearchDict GroupsArgList );
+use Flickr::Types::Person qw( FlickrAPIPeople FlickrToolsPerson PersonSearchDict GroupsArgList );
 use Types::Standard -types;
 use Type::Params qw( compile );
 use Carp;
@@ -82,21 +82,21 @@ sub BUILD {
 
 sub getGroups {
 
-    state $check = compile( FlickrAPIPeople, GroupsArgList );
-    my ($self,$args) = @_;
+    state $check = compile( FlickrToolsPerson, GroupsArgList );
+    my ($self,$args) = $check->(@_);
 
     my $api  = $self->api;
-    my $call = {};
+#    my $call = {};
     my $groups = {};
 
-    $call->{user_id} = $api->nsid;
+#    $call->{user_id} = $api->nsid;
 
-    if (defined($args->{user_id})) { $call->{user_id} = $args->{user_id}; }
-    if (defined($args->{extras}))  { $call->{extras}  = $args->{extras}; }
+#    if (defined($args->{user_id})) { $call->{user_id} = $args->{user_id}; }
+#    if (defined($args->{extras}))  { $call->{extras}  = $args->{extras}; }
 
     if ($api->perms() =~ /^(read|write|delete)$/) {
 
-        my $rsp = $api->execute_method('flickr.people.getGroups',$call);
+        my $rsp = $api->execute_method('flickr.people.getGroups',$args);
 
         if ($rsp->success == 1) {
 

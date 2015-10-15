@@ -7,8 +7,14 @@ our $VERSION = '1.21_02';
 
 use Flickr::Types::Tools;
 use Type::Library
-   -base,
-   -declare => qw( PersonSearchDict GroupsArgList  FlickrAPIPeople );
+    -base,
+    -declare => qw(
+                      FlickrAPIPeople
+                      FlickrToolsPerson
+                      GroupsArgList
+                      InfoArgList
+                      PersonSearchDict
+              );
 use Type::Utils -all;
 use Types::Standard -types;
 
@@ -22,11 +28,22 @@ declare PersonSearchDict,
 declare FlickrAPIPeople,
     as InstanceOf["Flickr::API::People"];
 
+declare FlickrToolsPerson,
+    as InstanceOf["Flickr::Tools::Person"];
+
 declare GroupsArgList,
    as Dict[
       user_id   => Optional[Str],
       extras    => Optional[ArrayRef[Enum[qw(privacy throttle restrictions)]]],
    ];
+
+
+declare InfoArgList,
+    as Dict[
+        user_id => Str,
+    ];
+
+
 
 1;
 
