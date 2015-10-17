@@ -1,6 +1,6 @@
 package Flickr::Tools;
 
-use Flickr::Types::Tools qw( FlickrAPI );
+use Flickr::Types::Tools qw( FlickrAPI FlickrAPIargs );
 
 use Carp;
 use Moo;
@@ -10,13 +10,33 @@ use namespace::clean;
 our $VERSION = '1.21_02';
 
 
-has api => (
-    is  => 'ro',
-    isa => FlickrAPI,
-    required => 1,
+#has api => (
+#    is  => 'ro',
+#    isa => FlickrAPI,
+#    required => 1,
+#
+#);
 
+has apiargs => (
+    is   => 'rwp',
+    isa  => FlickrAPIargs,
+    required => 1.
 );
 
+sub prepare_method {}
+
+sub validate_method {}
+
+sub call_method {}
+
+sub make_arglist {}
+
+sub auth_method {}
+
+sub switch_underlying_api {}
+
+# then specific tools::person or such operate on the family of methods
+# and they can override some of the above.
 
 1;
 
