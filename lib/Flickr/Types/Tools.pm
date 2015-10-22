@@ -7,9 +7,9 @@ our $VERSION = '1.21_02';
 
 use Type::Library
    -base,
-   -declare => qw( FlickrAPI FlickrAPIargs HexNum );
+   -declare => qw( FlickrAPI FlickrAPIargs HexNum FlickrToken );
 use Type::Utils -all;
-use Types::Standard -types;
+use Types::Standard qw ( Optional Dict Int Str InstanceOf Any );
 
 
 declare FlickrAPI,
@@ -17,14 +17,30 @@ declare FlickrAPI,
 
 declare HexNum,
       as Str,
-      where { /[a-f0-9]/i };
+      where { /^[a-f0-9]+$/i };
+
+declare FlickrToken,
+    as Str,
+    where { /^[a-f0-9\-]+$/i };
+
+#as Maybe[Str],
+#    where { ($_ =~ /^[a-f0-9\-]+$/i or (!defined($_))) };
 
 declare FlickrAPIargs,
     as Dict[
-        consumer_key    => HexNum,
-        consumer_secret => HexNum,
+        consumer_key     => HexNum,
+        consumer_secret  => HexNum,
+        access_token     => Optional[Any],
+        callback         => Optional[Str],
+        nonce            => Optional[Str],
+        request_method   => Optional[Str],
+        request_url      => Optional[Str],
+        signature_method => Optional[Str],
+        timestamp        => Optional[Int],
+        token            => Optional[FlickrToken],
+        token_secret     => Optional[HexNum],
+        version          => Optional[Str],
     ];
-
 
 
 1;
