@@ -7,13 +7,23 @@ our $VERSION = '1.21_02';
 
 use Type::Library
    -base,
-   -declare => qw( FlickrAPI FlickrAPIargs HexNum FlickrToken );
+   -declare => qw(
+                     FlickrAPI
+                     FlickrAPIcameras
+                     FlickrAPIargs
+                     FlickrPermStr
+                     FlickrToken
+                     HexNum
+);
 use Type::Utils -all;
 use Types::Standard qw ( Optional Dict Int Str InstanceOf Any );
 
 
 declare FlickrAPI,
     api    => InstanceOf["Flickr::API"];
+
+declare FlickrAPIcameras,
+    api    => InstanceOf["Flickr::API::Cameras"];
 
 declare HexNum,
       as Str,
@@ -23,8 +33,10 @@ declare FlickrToken,
     as Str,
     where { /^[a-f0-9\-]+$/i };
 
-#as Maybe[Str],
-#    where { ($_ =~ /^[a-f0-9\-]+$/i or (!defined($_))) };
+declare FlickrPermStr,
+    as Str,
+    where { /none|read|write|delete/i };
+
 
 declare FlickrAPIargs,
     as Dict[
