@@ -135,6 +135,7 @@ has signature_method => (
 has token => (
     is => 'ro',
     isa => Maybe[FlickrToken],
+    predicate => 1,
     clearer => 1,
     required => 0,
 );
@@ -142,6 +143,7 @@ has token => (
 has token_secret => (
     is => 'ro',
     isa => Maybe[HexNum],
+    predicate => 1,
     clearer => 1,
     required => 0,
 );
@@ -264,8 +266,6 @@ sub make_arglist {}
 
 sub auth_method {}
 
-sub switch_underlying_api {}
-
 sub set_method {
     my $self = shift;
     my $args = shift;
@@ -290,13 +290,28 @@ sub _build_api {
     my $call = {};
 
     # required args
-    $call->{consumer_key}    = $self->consumer_key;
-    $call->{consumer_secret} = $self->consumer_secret;
-    $call->{auth_type}       = 'oauth';
+    $call->{consumer_key}     = $self->consumer_key;
+    $call->{consumer_secret}  = $self->consumer_secret;
+    $call->{api_type}         = 'oauth';
+
+    $call->{unicode}          =  $self->unicode;
+    $call->{request_method}   =  $self->request_method;
+    $call->{request_url}      =  $self->request_url;
+    $call->{rest_uri}         =  $self->rest_uri;
+    $call->{auth_uri}         =  $self->auth_uri;
+    $call->{signature_method} =  $self->signature_method;
+    $call->{version}          =  $self->version;
+    $call->{callback}         =  $self->callback;
+
+    if ($self->has_token && $self->has_token_secret) {
+
+        $call->{token}          = $self->token;
+        $call->{token_secret}   = $self->token_secret;
+
+    }
 
     $self->{_api} = $self->{api_name}->new($call);
-
-
+    return;
 }
 
 #

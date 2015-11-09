@@ -150,6 +150,7 @@ SKIP: {
     is($ref->{'stat'}, undef, 'Check for no status from flickr.test.echo');
     is($ref->{'foo'}, undef, 'Check for no result result from flickr.test.echo');
     is($tool->connects, 0, 'Check that we cannot connect with invalid key');
+    is($tool->permissions, 'none', "Note that we have no permissions");
 }
 
 
@@ -176,7 +177,7 @@ SKIP: {
     is(
         $tool->has_api,
         '',
-        'We should not have an API object'
+        'We should not have an API object... yet'
     );
 
     $api = $tool->api;
@@ -184,6 +185,7 @@ SKIP: {
     isa_ok($api, $tool->api_name);
 
     is($tool->connects, 1, 'Check if we can connect with a (we trust) valid key');
+    isnt($tool->permissions, 'none', 'Check that we have some kind of permission');
 
 
 
