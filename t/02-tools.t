@@ -136,9 +136,17 @@ is(
 
 $api = $tool->api;
 
+#$tool->dump();
+
+
 isa_ok($api, $tool->api_name);
 
-is($api->is_oauth, 1, 'Does Flickr::API object identify as OAuth');
+is(
+    $api->is_oauth,
+    1,
+    'Does Flickr::API object identify as OAuth'
+);
+
 
 $rsp =  $api->execute_method('flickr.test.echo', { 'foo' => 'barred' } );
 $ref = $rsp->as_hash();
@@ -147,10 +155,26 @@ $ref = $rsp->as_hash();
 SKIP: {
     skip "skipping method call check, since we couldn't reach the API", 2
         if $rsp->rc() ne '200';
-    is($ref->{'stat'}, undef, 'Check for no status from flickr.test.echo');
-    is($ref->{'foo'}, undef, 'Check for no result result from flickr.test.echo');
-    is($tool->connects, 0, 'Check that we cannot connect with invalid key');
-    is($tool->permissions, 'none', "Note that we have no permissions");
+    is(
+        $ref->{'stat'},
+        undef,
+        'Check for no status from flickr.test.echo'
+    );
+    is(
+        $ref->{'foo'},
+        undef,
+        'Check for no result from flickr.test.echo'
+    );
+    is(
+        $tool->connects,
+        0,
+        'Check that we cannot connect with invalid key'
+    );
+    is(
+        $tool->permissions,
+        'none',
+        "Note that we have no permissions"
+    );
 }
 
 
@@ -163,7 +187,12 @@ undef $tool;
 
 my $fileflag=0;
 if (-r $config_file) { $fileflag = 1; }
-is($fileflag, 1, "Is the config file: $config_file, readable?");
+
+is(
+    $fileflag,
+    1,
+    "Is the config file: $config_file, readable?"
+);
 
 SKIP: {
 
@@ -184,11 +213,24 @@ SKIP: {
 
     isa_ok($api, $tool->api_name);
 
-    is($tool->connects, 1, 'Check if we can connect with a (we trust) valid key');
-    isnt($tool->permissions, 'none', 'Check that we have some kind of permission');
+    is(
+        $tool->connects,
+        1,
+        'Check if we can connect with a (we trust) valid key'
+    );
+    isnt(
+        $tool->permissions,
+        'none',
+        'Check that we have some kind of permission'
+    );
+
+    my $user = $tool->user;
+
+     like  ($user->{nsid}, qr/expected/, $test_name);
 
 
-
+    use Data::Dumper::Simple;
+    warn Dumper($user);
 
 #    $tool->_clear_api;
 
@@ -216,7 +258,7 @@ SKIP: {
 
 #my $tool = Flickr::Tools->new({api => $api});
 
-done_testing;
+done_testing();
 
 exit;
 

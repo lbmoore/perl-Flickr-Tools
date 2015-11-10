@@ -18,12 +18,10 @@ use Type::Library
 use Type::Utils -all;
 use Types::Standard qw ( Optional Dict Int Str InstanceOf Any );
 
-
 declare FlickrAPI,
-    api    => InstanceOf["Flickr::API"];
+  api => InstanceOf ["Flickr::API"];
 
-declare FlickrAPIcameras,
-    api    => InstanceOf["Flickr::API::Cameras"];
+declare FlickrAPIcameras, api => InstanceOf ["Flickr::API::Cameras"];
 
 declare HexNum,
       as Str,
@@ -39,21 +37,20 @@ declare FlickrPermStr,
 
 
 declare FlickrAPIargs,
-    as Dict[
-        consumer_key     => HexNum,
-        consumer_secret  => HexNum,
-        access_token     => Optional[Any],
-        callback         => Optional[Str],
-        nonce            => Optional[Str],
-        request_method   => Optional[Str],
-        request_url      => Optional[Str],
-        signature_method => Optional[Str],
-        timestamp        => Optional[Int],
-        token            => Optional[FlickrToken],
-        token_secret     => Optional[HexNum],
-        version          => Optional[Str],
-    ];
-
+  as Dict [
+    consumer_key     => HexNum,
+    consumer_secret  => HexNum,
+    access_token     => Optional [Any],
+    callback         => Optional [Str],
+    nonce            => Optional [Str],
+    request_method   => Optional [Str],
+    request_url      => Optional [Str],
+    signature_method => Optional [Str],
+    timestamp        => Optional [Int],
+    token            => Optional [FlickrToken],
+    token_secret     => Optional [HexNum],
+    version          => Optional [Str],
+  ];
 
 1;
 
