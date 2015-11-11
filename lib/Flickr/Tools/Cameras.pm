@@ -13,7 +13,7 @@ our $VERSION = '1.21_02';
 
 extends 'Flickr::Tools';
 
-has '+api_name' => (
+has '+_api_name' => (
     is       => 'ro',
     isa      => sub { $_[0] =~ m/^Flickr::API::Cameras$/ },
     required => 1,
