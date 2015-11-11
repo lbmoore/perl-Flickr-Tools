@@ -1,10 +1,13 @@
 package Flickr::Roles::Permissions;
+
 use Carp;
 use Data::Dumper::Simple;
 use Flickr::Types::Tools qw ( FlickrPermStr );
 use Types::Standard qw( Bool);
 use 5.010;
 use Moo::Role;
+
+our $VERSION = '1.21_02';
 
 has _permissions => (
     is        => 'rw',
@@ -54,7 +57,7 @@ sub _get_permissions {
 
     unless ( $self->has_token and $self->has_token_secret ) {
         carp
-"Tool needs to have an access token and token_secret to obtain permission";
+'Tool needs to have an access token and token_secret to obtain permission';
         $self->_clear_permissions;
         return;
     }
@@ -71,11 +74,11 @@ sub _get_permissions {
 
         my $answer = $rsp->as_hash;
 
-        warn "api success: ", $temp->api_success;
-        warn "dump answer: ", Dumper($answer);
+        warn 'api success: ', $temp->api_success;
+        warn 'dump answer: ', Dumper($answer);
 
-        $self->_permissions($answer->{oauth}->{perms});
-        $self->_user($answer->{oauth}->{user});
+        $self->_permissions( $answer->{oauth}->{perms} );
+        $self->_user( $answer->{oauth}->{user} );
         return;
     }
 }

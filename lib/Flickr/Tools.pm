@@ -16,11 +16,11 @@ use namespace::clean;
 
 our $VERSION = '1.21_02';
 
-with("Flickr::Roles::Permissions");
+with('Flickr::Roles::Permissions');
 
 has _api => (
     is        => 'ro',
-    isa       => InstanceOf ["Flickr::API"],
+    isa       => InstanceOf ['Flickr::API'],
     clearer   => 1,
     predicate => 'has_api',
     lazy      => 1,
@@ -28,11 +28,11 @@ has _api => (
     required  => 1,
 );
 
-has 'api_name' => (
+has '_api_name' => (
     is       => 'ro',
     isa      => sub { $_[0] =~ m/^Flickr::API$/ },
     required => 1,
-    default  => "Flickr::API",
+    default  => 'Flickr::API',
 );
 
 has access_token => (
@@ -77,7 +77,7 @@ has consumer_secret => (
 );
 
 has local => (
-    is       => 'ro',
+    is       => 'rw',
     isa      => Maybe [HashRef],
     clearer  => 1,
     required => 0,
@@ -162,9 +162,9 @@ has version => (
     default  => '1.0',
 );
 
-sub dump {
+sub _dump {
     my $self = shift;
-    say "Examine the tool";
+    say 'Examine the tool';
     print Dumper($self);
     return;
 }
@@ -178,7 +178,7 @@ sub BUILDARGS {
 
 # args should be either a hashref, or a string containing the path to a config file
 
-    unless ( ref($args) ) {
+    unless ( ref $args ) {
 
         my $config_filename = $args;
         undef $args;
@@ -249,9 +249,9 @@ sub clear_api {
 
 sub user {
     my $self = shift;
-
     return $self->_user if $self->_has_user;
-
+    carp 'No user found';
+    return;
 }
 
 sub prepare_method { }
@@ -308,7 +308,7 @@ sub _build_api {
 
     }
 
-    $self->{_api} = $self->{api_name}->new($call);
+    $self->{_api} = $self->{_api_name}->new($call);
     return;
 }
 
@@ -394,14 +394,21 @@ Development: 1.21_02
 
 =head1 SYNOPSIS
 
-This is a place holder for some configuration and persistence methods
-needed a little bit further down the line.
+This is the base class for the various Flickr::Tools, you will probably want
+one of the subclasses, such as Flickr::Tools::Person.
 
-  my $api  = Flickr::API->import_storable_config($config_file);
+  my $tool = Flickr::Tool->new({config_file => 'my/storable/config/file.st'});
 
-  my $tool = Flickr::Tool->new({api => $api});
+  my $tool = Flickr::Tool->new({
+                                consumer_key    => '1234567890abcdefedcba0987654321',
+                                consumer_secret => '123beefcafe321',
+                                token           => '12345678909876-acdbeef55321',
+                                token_secret    => '1234cafe4123b',
+                               });
+
 
 =head1 DESCRIPTION
+
 
 
 =head1 METHODS
@@ -412,6 +419,95 @@ needed a little bit further down the line.
 
 Returns a new Tool
 
+=item C<api>
+
+Returns the Flickr::API object this tool is using.
+
+=item C<clear_api>
+
+removes the Flickr::API object this tool was using.
+
+=item C<user>
+
+Returns the Flickr user hashref for the Flickr::API 
+object this tool is using.
+
+=back
+
+=head1 PUBLIC ATTRIBUTES
+
+=over
+
+=item C<access_token> a read only attribute.
+
+Returns your oauth access token if it is there. You
+will more commonly use C<token> below.
+
+=item C<auth_uri> a read only attribute.
+
+Returns the Flickr oauth api uri. The default is most
+likely what youy want.
+
+
+=item C<callback> a read only attribute.
+
+Returns your callback url if there is one.
+
+
+=item C<config_file> a read only attribute.
+
+Returns the path of your storable format configuration file, if there is one.
+
+=item C<consumer_key> a read only attribute.
+
+Returns your consumer key, this is required to create a tool object.
+
+=item C<consumer_secret> a read only attribute.
+
+Returns your consumer secret, this is required to create a tool object.
+
+=item C<local> a read/write attribute.
+
+local is a hashref that the tool keeps, but doesn't use. It is there to
+store you own items in a tool.
+
+ $tool->local($hashref);
+
+or
+
+ my $local = $tool->local;
+
+=item C<request_method> a read only attribute.
+
+=item C<request_token> a read only attribute.
+
+=item C<request_url> a read only attribute.
+
+=item C<rest_uri> a read only attribute.
+
+=item C<signature_method> a read only attribute.
+
+=item C<token> a read only attribute.
+
+=item C<token_secret> a read only attribute.
+
+=item C<unicode> a read only attribute.
+
+=item C<version> a read only attribute.
+
+
+=back
+
+=head1 PRIVATE ATTRIBUTES
+
+=over
+
+=item C<_api>
+
+=item C<_api_name>
+
+=item C<_user>
+
 =back
 
 =head1 DIAGNOSTICS
@@ -420,11 +516,19 @@ Returns a new Tool
 
 =head1 DEPENDENCIES
 
+Perl 5.10 and Moo.
+
 =head1 INCOMPATIBILITIES
+
+None known of, yet.
 
 =head1 BUGS AND LIMITATIONS
 
+Yes
+
 =head1 AUTHOR
+
+Louis B. Moore <lbmoore@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
