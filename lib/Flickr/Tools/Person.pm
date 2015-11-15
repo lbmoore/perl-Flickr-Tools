@@ -263,3 +263,16 @@ __END__
 Flickr::Person - Perl interface to the Flickr API for people
 
 =head1 SYNOPSIS
+
+Person role
+
+flickr.people.findByEmail         No   Perms
+flickr.people.findByUsername      No   Perms
+flickr.people.getGroups           Read Perms
+flickr.people.getInfo             No   Perms
+flickr.people.getLimits           Read Perms
+flickr.people.getPhotos           No   Perms or Read+ for private ones
+flickr.people.getPhotosOf         No   Perms
+flickr.people.getPublicGroups     No   Perms
+flickr.people.getPublicPhotos     No   Perms
+flickr.people.getUploadStatus     Read  Perms
