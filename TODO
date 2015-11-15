@@ -10,6 +10,10 @@ Short term:
 * move codebase to Moo 
 * Re-vivify Flickr::Tools
 * more tests
+  - look into Test::API
+  - look into Test::RequiresInternet and/or Test::Internet
+  - look into Test::Plan
+
 
 Long Term: 
 
