@@ -74,9 +74,6 @@ sub _get_permissions {
 
         my $answer = $rsp->as_hash;
 
-        warn 'api success: ', $temp->api_success;
-        warn 'dump answer: ', Dumper($answer);
-
         $self->_permissions( $answer->{oauth}->{perms} );
         $self->_user( $answer->{oauth}->{user} );
         return;

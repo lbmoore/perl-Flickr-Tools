@@ -9,3 +9,11 @@ use_ok( 'Flickr::Types::Tools' );
 }
 
 diag( "Testing Flickr::Tools $Flickr::Tools::VERSION" );
+
+exit;
+
+__END__
+
+# Local Variables:
+# mode: Perl
+# End:

@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More;
+use 5.010;
+use Test::More tests => 5;
 use Test::TypeTiny;
 use Types::Standard qw( HashRef );
 use Flickr::Types::Person qw( PersonSearchDict );
@@ -21,9 +22,6 @@ should_pass($user, HashRef, 'Discern user as a hashref');
 should_fail($user->{username}, HashRef, 'Discern an error with string user');
 
 
-
-
-done_testing;
 
 exit;
 

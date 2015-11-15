@@ -1,21 +1,26 @@
 use strict;
 use warnings;
-use Test::More;
+use Test::More  tests => 32;
 use Flickr::API;
 use Flickr::Tools;
 use Flickr::Roles::Permissions;
 use 5.010;
 
+
+my $config_file;
+
 if (defined($ENV{MAKETEST_OAUTH_CFG}) && defined ($ENV{MAKETEST_VALUES})) {
 
-#    plan( tests => 9 );
+    $config_file  = $ENV{MAKETEST_OAUTH_CFG};
+
 }
 else {
-    plan(skip_all => 'Person tests require that MAKETEST_OAUTH_CFG and MAKETEST_VALUES are defined, see README.');
+
+    diag( 'No MAKETEST_OAUTH_CFG or MAKETEST_VALUES, shallow tests only' );
+    $config_file  =  '/no/file/by/this/name.is.there?';
 }
 
 
-my $config_file  = $ENV{MAKETEST_OAUTH_CFG};
 my $config_ref;
 
 my $api;
@@ -68,7 +73,7 @@ my $tool = Flickr::Tools->new(
 isa_ok($tool, 'Flickr::Tools');
 
 is(
-    $tool->api_name,
+    $tool->_api_name,
     "Flickr::API",
     'Are we looking for the correct API'
 );
@@ -136,10 +141,7 @@ is(
 
 $api = $tool->api;
 
-#$tool->dump();
-
-
-isa_ok($api, $tool->api_name);
+isa_ok($api, $tool->_api_name);
 
 is(
     $api->is_oauth,
@@ -153,7 +155,7 @@ $ref = $rsp->as_hash();
 
 
 SKIP: {
-    skip "skipping method call check, since we couldn't reach the API", 2
+    skip "skipping method call check, since we couldn't reach the API", 4
         if $rsp->rc() ne '200';
     is(
         $ref->{'stat'},
@@ -184,19 +186,12 @@ undef $ref;
 undef $tool;
 
 
-
 my $fileflag=0;
 if (-r $config_file) { $fileflag = 1; }
 
-is(
-    $fileflag,
-    1,
-    "Is the config file: $config_file, readable?"
-);
-
 SKIP: {
 
-    skip "Skipping tool api tests, oauth config isn't there or is not readable", 8   ##############
+    skip "Skipping tool api tests, oauth config isn't there or is not readable", 10 
         if $fileflag == 0;
 
     $tool = Flickr::Tools->new({config_file => $config_file, test_more_bait => "Find Me iF you can."});
@@ -211,7 +206,7 @@ SKIP: {
 
     $api = $tool->api;
 
-    isa_ok($api, $tool->api_name);
+    isa_ok($api, $tool->_api_name);
 
     is(
         $tool->connects,
@@ -226,39 +221,25 @@ SKIP: {
 
     my $user = $tool->user;
 
-     like  ($user->{nsid}, qr/expected/, $test_name);
+    like  ($user->{nsid},     qr/.+/, 'got some kind of nsid');
+    like  ($user->{username}, qr/.+/, 'got some kind of username');
+    like  ($user->{fullname}, qr/.+/, 'got some kind of fullname');
 
+    $tool->_clear_api;
 
-    use Data::Dumper::Simple;
-    warn Dumper($user);
+    my $toggle = 0;
+    if ($tool->has_api) { $toggle = 1; }
 
-#    $tool->_clear_api;
+    is($toggle, 0, 'did we clear the api out of the tool');
 
-#    $tool->_build_api;
+    $tool->_build_api;
+    $toggle = 0;
+    if ($tool->has_api) { $toggle = 1; }
 
-#    $tool->dump();
-
-#    my $test1 = $tool->_get_api();
-
-#    my $test2 = $tool->_get_api({ API => 'Flickr::API::Cameras'});
-
-#    use Data::Dumper::Simple;
-#    warn Dumper($test1,$test2);
-
-#    $api = Flickr::API->import_storable_config($config_file);
-
-  #  isa_ok($api, 'Flickr::API');
-
-  #  is($api->is_oauth, 1, 'Does the Flickr::API object for this person identify as OAuth');
-  #  is($api->api_success,  1, 'Did api initialize successfully');
-
-
+    is($toggle, 1, 'did we build an api in the tool');
 
 }
 
-#my $tool = Flickr::Tools->new({api => $api});
-
-done_testing();
 
 exit;
 

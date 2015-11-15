@@ -16,38 +16,97 @@ else {
 my $config_file  = $ENV{MAKETEST_OAUTH_CFG};
 my $config_ref;
 
-my $tool;
 my $brands;
 my $models;
 
-#$tool =  Flickr::Tools->new({ ignore => "this one"});
-#
-#isa_ok(
-#    $tool,
-#    'Flickr::Tools'
-#);
 
-#$tool =  Flickr::Tools::Cameras->new({ ignore => "this one"});
-#
-#isa_ok(
-#    $tool,
-#    'Flickr::Tools::Cameras'
-#);
+eval {
+
+    my $tool = Flickr::Tools::Cameras->new(['123deadbeef456','MyUserName']);
+
+};
+
+isnt($@, undef, 'Did we fail to create object with bad args: Anon Array');
 
 
 
+my $tool = Flickr::Tools::Cameras->new(
+    { consumer_key    => '012345beefcafe543210',
+      consumer_secret => 'a234b345c456feed',
+  }
+);
+
+isa_ok($tool, 'Flickr::Tools::Cameras');
+
+is(
+    $tool->_api_name,
+    "Flickr::API::Cameras",
+    'Are we looking for the correct API'
+);
+
+
+
+is(
+    $tool->consumer_key,
+    '012345beefcafe543210',
+    'Did we get back our test consumer_key'
+);
+
+
+is(
+    $tool->has_api,
+    '',
+    'Are we appropriately missing a Flickr::API::Cameras object'
+);
+
+my $api = $tool->api;
 
 
 
 
+isa_ok($api, $tool->_api_name);
 
+is(
+    $api->is_oauth,
+    1,
+    'Does Flickr::API::Cameras object identify as OAuth'
+);
+
+
+
+
+my $rsp =  $api->execute_method('flickr.test.echo', { 'foo' => 'barred' } );
+my $ref = $rsp->as_hash();
+
+
+SKIP: {
+    skip "skipping method call check, since we couldn't reach the API", 2
+        if $rsp->rc() ne '200';
+    is(
+        $ref->{'stat'},
+        undef,
+        'Check for no status from flickr.test.echo'
+    );
+    is(
+        $ref->{'foo'},
+        undef,
+        'Check for no result from flickr.test.echo'
+    );
+    is(
+        $tool->connects,
+        0,
+        'Check that we cannot connect with invalid key'
+    );
+    is(
+        $tool->permissions,
+        'none',
+        "Note that we have no permissions"
+    );
+}
 
 my $fileflag=0;
 if (-r $config_file) { $fileflag = 1; }
 is($fileflag, 1, "Is the config file: $config_file, readable?");
-
-
-
 
 SKIP: {
 

@@ -410,7 +410,6 @@ one of the subclasses, such as Flickr::Tools::Person.
 =head1 DESCRIPTION
 
 
-
 =head1 METHODS
 
 =over
