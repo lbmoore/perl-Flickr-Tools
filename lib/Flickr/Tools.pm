@@ -365,7 +365,7 @@ sub _make_config_template {
         request_url      => 'https://api.flickr.com/services/rest/',
         rest_uri         => 'https://api.flickr.com/services/rest/',
         signature_method => 'HMAC-SHA1',
-        timestanp        => undef,
+        timestamp        => undef,
         token            => undef,
         token_secret     => undef,
         unicode          => 0,

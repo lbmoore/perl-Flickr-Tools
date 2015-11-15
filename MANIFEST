@@ -1,11 +1,10 @@
 Changes
 ignore.txt
+examples/flickr_camers.pl
 lib/Flickr/Photo.pm
 lib/Flickr/Photoset.pm
 lib/Flickr/Tools/Cameras.pm
-lib/Flickr/Tools/Person.pm
 lib/Flickr/Tools.pm
-lib/Flickr/Types/Person.pm
 lib/Flickr/Types/Tools.pm
 lib/Flickr/Roles/Permissions.pm
 LICENSE
@@ -14,9 +13,7 @@ MANIFEST			This list of files
 README
 README.md
 t/00-load.t
-t/01-types-person.t
 t/01-types-tools.t
 t/02-tools.t
 t/03-cameras.t
-t/03-person.t
 TODO
