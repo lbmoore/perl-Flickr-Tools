@@ -1,16 +1,8 @@
 use strict;
 use warnings;
-use Test::More;
+use Test::More tests => 19;
 use Flickr::Tools::Cameras;
 use 5.010;
-
-if (defined($ENV{MAKETEST_OAUTH_CFG}) && defined ($ENV{MAKETEST_VALUES})) {
-
-#    plan( tests => 9 );
-}
-else {
-    plan(skip_all => 'Cameras  require that MAKETEST_OAUTH_CFG and MAKETEST_VALUES are defined, see README.');
-}
 
 
 my $config_file  = $ENV{MAKETEST_OAUTH_CFG};
@@ -62,17 +54,13 @@ is(
 my $api = $tool->api;
 
 
-
-
 isa_ok($api, $tool->_api_name);
 
 is(
     $api->is_oauth,
     1,
-    'Does Flickr::API::Cameras object identify as OAuth'
+    'Now that we have one, does Flickr::API::Cameras object identify as OAuth'
 );
-
-
 
 
 my $rsp =  $api->execute_method('flickr.test.echo', { 'foo' => 'barred' } );
@@ -80,7 +68,7 @@ my $ref = $rsp->as_hash();
 
 
 SKIP: {
-    skip "skipping method call check, since we couldn't reach the API", 2
+    skip "skipping method call checks, since we couldn't reach the API", 12
         if $rsp->rc() ne '200';
     is(
         $ref->{'stat'},
@@ -102,79 +90,70 @@ SKIP: {
         'none',
         "Note that we have no permissions"
     );
+
+    my $fileflag=0;
+
+  SKIP: {
+
+        skip 'Skipping config file test, config file not defined', 1
+            unless defined($config_file);
+
+        if (-r $config_file) { $fileflag = 1; }
+        is($fileflag, 1, "Is the config file: $config_file, readable?");
+
 }
 
-my $fileflag=0;
-if (-r $config_file) { $fileflag = 1; }
-is($fileflag, 1, "Is the config file: $config_file, readable?");
+  SKIP: {
 
-SKIP: {
+        skip "Skipping camera tests, oauth config isn't there or is not readable", 7
+            if $fileflag == 0;
 
-    skip "Skipping camera tests, oauth config isn't there or is not readable", 8   ##############
-        if $fileflag == 0;
+        $tool = Flickr::Tools::Cameras->new({config_file => $config_file});
 
-    $tool = Flickr::Tools::Cameras->new({config_file => $config_file});
-
-       if ($tool->has_api) {
-
-        say "1c) has_api is true";
-
-    }
-    else {
-
-        say "1c) has_api is false";
+        is(
+            $tool->has_api,
+            '',
+            'Are we appropriately missing a Flickr::API::Cameras object'
+        );
 
         my $api = $tool->api;
 
-    }
-
-    if ($tool->has_api) {
-
-        say "2c) has_api is true";
+        isnt(
+            $tool->has_api,
+            '',
+            'Do we have a Flickr::API::Cameras object now'
+        );
 
         $tool->_clear_api;
 
+        is(
+            $tool->has_api,
+            '',
+            'Are we appropriately missing a Flickr::API::Cameras object, again'
+        );
+
+
+        $api = $tool->api;
+
+
+        isa_ok(
+            $tool,
+            'Flickr::Tools::Cameras'
+        );
+
+        $brands = $tool->getBrands;
+
+        is(ref($brands), 'HASH', 'did we get a hashref by default');
+
+        $brands = $tool->getBrands({list_type => 'List'});
+
+        is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
+
+        $models = $tool->getBrandModels({Brand => 'Nikon'});
+
+        is(ref($models), 'HASH', 'did we get a hashref by default');
+
     }
-    else {
-
-        say "2c) has_api is false";
-
-    }
-
-
-    if ($tool->has_api) {
-
-        say "3c) has_api is true";
-
-    }
-    else {
-
-        say "3c) has_api is false";
-
-    }
-
-    my $api = $tool->api;
-
-
-    isa_ok(
-        $tool,
-        'Flickr::Tools::Cameras'
-    );
-
-
-
-    $brands = $tool->getBrands;
-
-    is(ref($brands), 'HASH', 'did we get a hashref by default');
-
-    $brands = $tool->getBrands({list_type => 'List'});
-
-    is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
-
-    $models = $tool->getBrandModels({Brand => 'Nikon'});
-
-    is(ref($models), 'HASH', 'did we get a hashref by default');
-
 }
 
 done_testing;

@@ -1,6 +1,6 @@
 Changes
 ignore.txt
-examples/flickr_camers.pl
+examples/flickr_cameras.pl
 lib/Flickr/Photo.pm
 lib/Flickr/Photoset.pm
 lib/Flickr/Tools/Cameras.pm
