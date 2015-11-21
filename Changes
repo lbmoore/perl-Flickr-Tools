@@ -1,5 +1,9 @@
 Revision history for Flickr-Tools
 
+1.21_03 20 November 2015
+ * Added caching to Cameras.pm
+
+
 1.21_02 15 November 2015
  * Got a role working as desired, Permissions.pm
  * Make the tests more to the point

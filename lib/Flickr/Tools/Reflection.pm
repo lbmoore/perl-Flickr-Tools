@@ -9,7 +9,7 @@ use namespace::clean;
 use 5.010;
 
 
-our $VERSION = '1.21_02';
+our $VERSION = '1.21_03';
 
 extends 'Flickr::Tools';
 

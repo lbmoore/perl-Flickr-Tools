@@ -56,6 +56,7 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Carp' => 0,
+        'Cache' => 0,
         'Flickr::API' => 0,
         'Moo' => 0,
         'Moo::Role' => 0,

@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 19;
+use Test::More tests => 21;
 use Flickr::Tools::Cameras;
 use 5.010;
 
@@ -149,9 +149,17 @@ SKIP: {
 
         is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
 
-        $models = $tool->getBrandModels({Brand => 'Nikon'});
+        $models = $tool->getBrandModels({Brand => 'Leaf'});
 
         is(ref($models), 'HASH', 'did we get a hashref by default');
+
+        $models = $tool->getBrandModels({Brand => 'BlackBerry'});
+
+        is(ref($models), 'HASH', 'did we get another hashref by default');
+
+        $brands = $tool->getBrands({list_type => 'List'});
+
+        is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
 
     }
 }
