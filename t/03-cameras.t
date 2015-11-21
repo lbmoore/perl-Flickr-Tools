@@ -68,7 +68,7 @@ my $ref = $rsp->as_hash();
 
 
 SKIP: {
-    skip "skipping method call checks, since we couldn't reach the API", 12
+    skip "skipping method call checks, since we couldn't reach the API", 14
         if $rsp->rc() ne '200';
     is(
         $ref->{'stat'},
@@ -105,7 +105,7 @@ SKIP: {
 
   SKIP: {
 
-        skip "Skipping camera tests, oauth config isn't there or is not readable", 7
+        skip "Skipping camera tests, oauth config isn't there or is not readable", 9
             if $fileflag == 0;
 
         $tool = Flickr::Tools::Cameras->new({config_file => $config_file});
