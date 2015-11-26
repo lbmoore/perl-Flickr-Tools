@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 21;
+use Test::More; # tests => 23;
 use Flickr::Tools::Cameras;
 use 5.010;
 
@@ -29,6 +29,14 @@ my $tool = Flickr::Tools::Cameras->new(
 );
 
 isa_ok($tool, 'Flickr::Tools::Cameras');
+
+is($tool->cache_duration, 900, 'Is the cache duration 900 seconds');
+
+$tool->cache_duration(300);
+
+is($tool->cache_duration, 300, 'Is the cache duration 300 seconds, now');
+
+
 
 is(
     $tool->_api_name,
@@ -68,7 +76,7 @@ my $ref = $rsp->as_hash();
 
 
 SKIP: {
-    skip "skipping method call checks, since we couldn't reach the API", 14
+    skip "skipping method call checks, since we couldn't reach the API", 16
         if $rsp->rc() ne '200';
     is(
         $ref->{'stat'},
@@ -105,7 +113,7 @@ SKIP: {
 
   SKIP: {
 
-        skip "Skipping camera tests, oauth config isn't there or is not readable", 9
+        skip "Skipping camera tests, oauth config isn't there or is not readable", 11
             if $fileflag == 0;
 
         $tool = Flickr::Tools::Cameras->new({config_file => $config_file});
@@ -140,10 +148,21 @@ SKIP: {
             $tool,
             'Flickr::Tools::Cameras'
         );
+   #     say 'got ',$tool->from_cache,' from cache';
+       # warn 'one';
+        use Data::Dumper::Simple;
+      #  warn Dumper($tool);
 
         $brands = $tool->getBrands;
-
+        warn 'two';
         is(ref($brands), 'HASH', 'did we get a hashref by default');
+        my $cache_hit;
+#        if ($tool->from_cache) { $cache_hit = 1; } else { $cache_hit = 0; }
+
+        is ($tool->cache_hit, 0, 'did we go to Flickr on this call');
+        $brands = $tool->getBrands;
+      #  if ($tool->from_cache) { $cache_hit = 1; } else { $cache_hit = 1; }  ### else oughtta be 0
+        is ($tool->cache_hit, 1, 'did we get it from cache on this call');
 
         $brands = $tool->getBrands({list_type => 'List'});
 
@@ -160,6 +179,8 @@ SKIP: {
         $brands = $tool->getBrands({list_type => 'List'});
 
         is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
+
+#        $tool->cache_info;
 
     }
 }

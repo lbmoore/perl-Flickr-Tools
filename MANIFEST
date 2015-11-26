@@ -9,6 +9,7 @@ lib/Flickr/Tools/Reflection.pm
 lib/Flickr/Tools.pm
 lib/Flickr/Types/Tools.pm
 lib/Flickr/Roles/Permissions.pm
+lib/Flickr/Roles/Caching.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
