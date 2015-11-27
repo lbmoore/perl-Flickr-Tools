@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More; # tests => 23;
+use Test::More tests => 25;
 use Flickr::Tools::Cameras;
 use 5.010;
 
@@ -30,28 +30,31 @@ my $tool = Flickr::Tools::Cameras->new(
 
 isa_ok($tool, 'Flickr::Tools::Cameras');
 
-is($tool->cache_duration, 900, 'Is the cache duration 900 seconds');
+is(
+    $tool->cache_duration,
+    900,
+    'Is the cache duration 900 seconds'
+);
 
 $tool->cache_duration(300);
 
-is($tool->cache_duration, 300, 'Is the cache duration 300 seconds, now');
-
-
+is(
+    $tool->cache_duration,
+    300,
+    'Is the cache duration 300 seconds, now'
+);
 
 is(
     $tool->_api_name,
-    "Flickr::API::Cameras",
+    'Flickr::API::Cameras',
     'Are we looking for the correct API'
 );
-
-
 
 is(
     $tool->consumer_key,
     '012345beefcafe543210',
     'Did we get back our test consumer_key'
 );
-
 
 is(
     $tool->has_api,
@@ -60,7 +63,6 @@ is(
 );
 
 my $api = $tool->api;
-
 
 isa_ok($api, $tool->_api_name);
 
@@ -96,7 +98,7 @@ SKIP: {
     is(
         $tool->permissions,
         'none',
-        "Note that we have no permissions"
+        'Note that we have no permissions'
     );
 
     my $fileflag=0;
@@ -107,9 +109,13 @@ SKIP: {
             unless defined($config_file);
 
         if (-r $config_file) { $fileflag = 1; }
-        is($fileflag, 1, "Is the config file: $config_file, readable?");
 
-}
+        is(
+            $fileflag,
+            1,
+            "Is the config file: $config_file, readable?"
+        );
+    }
 
   SKIP: {
 
@@ -148,44 +154,72 @@ SKIP: {
             $tool,
             'Flickr::Tools::Cameras'
         );
-   #     say 'got ',$tool->from_cache,' from cache';
-       # warn 'one';
-        use Data::Dumper::Simple;
-      #  warn Dumper($tool);
 
         $brands = $tool->getBrands;
-        warn 'two';
-        is(ref($brands), 'HASH', 'did we get a hashref by default');
-        my $cache_hit;
-#        if ($tool->from_cache) { $cache_hit = 1; } else { $cache_hit = 0; }
 
-        is ($tool->cache_hit, 0, 'did we go to Flickr on this call');
+        is(
+            ref($brands),
+            'HASH',
+            'did we get a hashref by default'
+        );
+
+        is (
+            $tool->cache_hit,
+            0,
+            'did we go to Flickr on this call'
+        );
+
         $brands = $tool->getBrands;
-      #  if ($tool->from_cache) { $cache_hit = 1; } else { $cache_hit = 1; }  ### else oughtta be 0
-        is ($tool->cache_hit, 1, 'did we get it from cache on this call');
 
-        $brands = $tool->getBrands({list_type => 'List'});
+        is (
+            $tool->cache_hit,
+            1,
+            'did we get it from cache on this call'
+        );
 
-        is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
+        $brands = $tool->getBrands(
+            {clear_cache => 1}
+        );
 
-        $models = $tool->getBrandModels({Brand => 'Leaf'});
+        is (
+            $tool->cache_hit,
+            0,
+            'did we once again go to Flickr on this call'
+        );
 
-        is(ref($models), 'HASH', 'did we get a hashref by default');
+        $brands = $tool->getBrands(
+            {list_type => 'List'}
+        );
 
-        $models = $tool->getBrandModels({Brand => 'BlackBerry'});
+        is(
+            ref($brands),
+            'ARRAY',
+            'did we get an arrayref when asked for one'
+        );
 
-        is(ref($models), 'HASH', 'did we get another hashref by default');
+        $models = $tool->getBrandModels(
+            {Brand => 'Leaf'}
+        );
 
-        $brands = $tool->getBrands({list_type => 'List'});
+        is(
+            ref($models),
+            'HASH',
+            'did we get a hashref by default'
+        );
 
-        is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
+        $models = $tool->getBrandModels(
+            {Brand => 'BlackBerry'}
+        );
 
-#        $tool->cache_info;
+        is(
+            ref($models),
+            'HASH',
+            'did we get another hashref by default'
+        );
 
     }
 }
 
-done_testing;
 
 exit;
 
