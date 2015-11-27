@@ -6,7 +6,7 @@ use Types::Standard qw( Maybe Bool Str Int InstanceOf HashRef );
 use 5.010;
 use Moo::Role;
 
-our $VERSION = '1.21_03';
+our $VERSION = '1.21_04';
 
 has cache_duration => (
     is       => 'rw',
@@ -48,7 +48,7 @@ Flickr::Roles::Caching - Caching behaviors for the Flickr::Tools
 
 CPAN:        1.21
 
-Development: 1.21_03
+Development: 1.21_04
 
 =head1 SYNOPSIS
 

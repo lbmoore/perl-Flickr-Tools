@@ -6,7 +6,7 @@ use Types::Standard qw( Bool);
 use 5.010;
 use Moo::Role;
 
-our $VERSION = '1.21_03';
+our $VERSION = '1.21_04';
 
 has _permissions => (
     is        => 'rw',
