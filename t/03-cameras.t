@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 19;
+use Test::More tests => 25;
 use Flickr::Tools::Cameras;
 use 5.010;
 
@@ -31,19 +31,30 @@ my $tool = Flickr::Tools::Cameras->new(
 isa_ok($tool, 'Flickr::Tools::Cameras');
 
 is(
-    $tool->_api_name,
-    "Flickr::API::Cameras",
-    'Are we looking for the correct API'
+    $tool->cache_duration,
+    900,
+    'Is the cache duration 900 seconds'
 );
 
+$tool->cache_duration(300);
 
+is(
+    $tool->cache_duration,
+    300,
+    'Is the cache duration 300 seconds, now'
+);
+
+is(
+    $tool->_api_name,
+    'Flickr::API::Cameras',
+    'Are we looking for the correct API'
+);
 
 is(
     $tool->consumer_key,
     '012345beefcafe543210',
     'Did we get back our test consumer_key'
 );
-
 
 is(
     $tool->has_api,
@@ -52,7 +63,6 @@ is(
 );
 
 my $api = $tool->api;
-
 
 isa_ok($api, $tool->_api_name);
 
@@ -68,7 +78,7 @@ my $ref = $rsp->as_hash();
 
 
 SKIP: {
-    skip "skipping method call checks, since we couldn't reach the API", 12
+    skip "skipping method call checks, since we couldn't reach the API", 16
         if $rsp->rc() ne '200';
     is(
         $ref->{'stat'},
@@ -88,7 +98,7 @@ SKIP: {
     is(
         $tool->permissions,
         'none',
-        "Note that we have no permissions"
+        'Note that we have no permissions'
     );
 
     my $fileflag=0;
@@ -99,13 +109,17 @@ SKIP: {
             unless defined($config_file);
 
         if (-r $config_file) { $fileflag = 1; }
-        is($fileflag, 1, "Is the config file: $config_file, readable?");
 
-}
+        is(
+            $fileflag,
+            1,
+            "Is the config file: $config_file, readable?"
+        );
+    }
 
   SKIP: {
 
-        skip "Skipping camera tests, oauth config isn't there or is not readable", 7
+        skip "Skipping camera tests, oauth config isn't there or is not readable", 11
             if $fileflag == 0;
 
         $tool = Flickr::Tools::Cameras->new({config_file => $config_file});
@@ -143,20 +157,69 @@ SKIP: {
 
         $brands = $tool->getBrands;
 
-        is(ref($brands), 'HASH', 'did we get a hashref by default');
+        is(
+            ref($brands),
+            'HASH',
+            'did we get a hashref by default'
+        );
 
-        $brands = $tool->getBrands({list_type => 'List'});
+        is (
+            $tool->cache_hit,
+            0,
+            'did we go to Flickr on this call'
+        );
 
-        is(ref($brands), 'ARRAY', 'did we get an arrayref when asked for one');
+        $brands = $tool->getBrands;
 
-        $models = $tool->getBrandModels({Brand => 'Nikon'});
+        is (
+            $tool->cache_hit,
+            1,
+            'did we get it from cache on this call'
+        );
 
-        is(ref($models), 'HASH', 'did we get a hashref by default');
+        $brands = $tool->getBrands(
+            {clear_cache => 1}
+        );
+
+        is (
+            $tool->cache_hit,
+            0,
+            'did we once again go to Flickr on this call'
+        );
+
+        $brands = $tool->getBrands(
+            {list_type => 'List'}
+        );
+
+        is(
+            ref($brands),
+            'ARRAY',
+            'did we get an arrayref when asked for one'
+        );
+
+        $models = $tool->getBrandModels(
+            {Brand => 'Leaf'}
+        );
+
+        is(
+            ref($models),
+            'HASH',
+            'did we get a hashref by default'
+        );
+
+        $models = $tool->getBrandModels(
+            {Brand => 'BlackBerry'}
+        );
+
+        is(
+            ref($models),
+            'HASH',
+            'did we get another hashref by default'
+        );
 
     }
 }
 
-done_testing;
 
 exit;
 

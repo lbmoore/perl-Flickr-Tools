@@ -1,8 +1,17 @@
 Revision history for Flickr-Tools
 
+1.21_03 26 November 2015
+ * Added caching to Cameras.pm
+ * added cache as a role for cameras, et. al.
+ * add some cache tests into the t/03-cameras.t 
+ * Add fix for RT109558 missing dependency
+ * close out some of the ancient now obviated RT bugs from years ago.
+
+
 1.21_02 15 November 2015
  * Got a role working as desired, Permissions.pm
  * Make the tests more to the point
+ * Add subclass and test for Reflection.pm
 
 
 1.21_01 12 October 2015

@@ -13,11 +13,11 @@ Flickr::Photo - Represents a photo on Flickr.
 
 =head1 VERSION
 
-Version 1.21_02
+Version 1.21_03
 
 =cut
 
-our $VERSION = '1.21_02';
+our $VERSION = '1.21_03';
 
 =head1 SYNOPSIS
 
