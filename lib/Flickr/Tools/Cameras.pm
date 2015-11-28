@@ -4,7 +4,7 @@ use Flickr::API::Cameras;
 use Types::Standard qw ( InstanceOf );
 use Carp;
 use Moo;
-use strictures 2;
+use strictures;
 use namespace::clean;
 use 5.010;
 

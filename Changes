@@ -1,7 +1,9 @@
 Revision history for Flickr-Tools
 
 1.21_04
-
+ * Add fix for RT 109758
+ * Add version dependency for Flickr::API
+ * Added in a reflection tool
 
 1.21_03 26 November 2015
  * Added caching to Cameras.pm

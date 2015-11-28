@@ -4,10 +4,11 @@ use Flickr::API::Reflection;
 use Types::Standard qw ( InstanceOf );
 use Carp;
 use Moo;
-use strictures 2;
+use strictures;
 use namespace::clean;
 use 5.010;
 
+with qw(Flickr::Roles::Caching);
 
 our $VERSION = '1.21_04';
 
@@ -15,7 +16,7 @@ extends 'Flickr::Tools';
 
 has '+_api_name' => (
     is       => 'ro',
-    isa      => sub { $_[0] =~ m/^Flickr::API::Reflection$/ },
+    isa      => sub { $_[0] eq 'Flickr::API::Reflection' },
     required => 1,
     default  => 'Flickr::API::Reflection',
 );
@@ -23,47 +24,80 @@ has '+_api_name' => (
 sub getMethods {
     my ($self, $args) = @_;
     my $methods;
+    my $pre_expire = 0;
+
+    $self->_set_cache_hit(1);
+
+    if ( defined( $args->{clear_cache} ) and $args->{clear_cache} ) {
+        $pre_expire = 1;
+    }
 
     if (defined($args->{list_type}) and $args->{list_type} =~ m/list/i) {
 
-        $methods = $self->{_api}->methods_list;
+        $self->_set_cache_key('methods_list');
 
+        $methods = $self->_cache->get( $self->cache_key,
+            expire_if => sub { $pre_expire } );
+
+        if ( !defined $methods ) {
+            $methods = $self->{_api}->methods_list;
+            $self->_set_cache_hit(0);
+            $self->_cache->set( $self->cache_key, $methods,
+                                $self->cache_duration );
+        }
     }
     else {
 
-        $methods = $self->{_api}->methods_hash;
+        $self->_set_cache_key('methods_hash');
 
+        $methods = $self->_cache->get( $self->cache_key,
+                                       expire_if => sub { $pre_expire } );
+        if ( !defined $methods) {
+            $methods = $self->{_api}->methods_hash;
+            $self->_set_cache_hit(0);
+            $self->_cache->set( $self->cache_key, $methods,
+                $self->cache_duration );
+        }
     }
 
     return $methods;
 }
 
 
-sub thisMethod {
+sub getMethod {
    my ($self, $args) = @_;
+   my $rsp   = {};
+   my $pre_expire = 0;
 
-   my $rsp = {};
+   $self->_set_cache_hit(1);
 
-   if (ref($args) eq 'HASH') {
+   if  ($args =~ m/flickr\.[a-z]+\.*/x) {
+       my $tmp = { Method => $args };
+       $args = $tmp;
+   }
+   if ( defined( $args->{clear_cache} ) and $args->{clear_cache} ) {
+       $pre_expire = 1;
+   }
 
-       if (exists($args->{Method})) {
+   if (exists($args->{Method})) {
 
+       $self->_set_cache_key( 'Method ' . $args->{Method} );
+
+       $rsp = $self->_cache->get( $self->cache_key,
+                                              expire_if => sub { $pre_expire } );
+       if ( !defined $rsp) {
            $rsp = $self->{_api}->get_method($args->{Method});
-
-       }
-       elsif ($args =~ m/flickr\.[a-z]+\.*/) {
-
-           $rsp = $self->{_api}->get_method($args);
-
-       }
-       else {
-
-           carp "argument neither a hashref pointing to a method, or the name of a method";
-
+           $self->_set_cache_hit(0);
+           $self->_cache->set( $self->cache_key, $rsp,
+                               $self->cache_duration );
        }
    }
-   return $rsp;
+   else {
 
+       carp 'argument neither a hashref pointing to a method, or the name of a method';
+
+   }
+   return $rsp;
 }
 
 
@@ -73,25 +107,57 @@ __END__
 
 =head1 NAME
 
-Flickr::Tools::Cameras - Perl interface to the Flickr::API for cameras
+Flickr::Tools::Reflection - Perl interface to the Flickr::API for Flickr 
+method reflection
+
+=head1 VERSION
+
+CPAN:        1.21
+
+Development: 1.21_04
+
 
 =head1 SYNOPSIS
 
  use strict;
  use warnings;
- use Flickr::Tools::Cameras;
+ use Flickr::Tools::Reflection;
  use 5.010;
 
- my $config = "~/my_config.st";  # config in Storable format from L<Flickr::API>
 
- my $camera_tool = Flickr::Tools::Cameras->new({config_file => $config});
+=head1 DIAGNOSTICS
 
- my $arrayref = $camera_tool->getBrands({list_type => 'List'});
- my $hashref  = $camera_tool->getBrands;  #hashref is the default
+=head1 CONFIGURATION AND ENVIRONMENT
 
- if (exists($hashref->{mybrand}) {
+=head1 DESCRIPTION
 
-    $camera_tool->getBrandModels({Brand => 'mybrand'});
+=head1 SUBROUTINES/METHODS
 
- }
+=head1 DEPENDENCIES
+
+CHI, Perl 5.10 and Moo.
+
+=head1 INCOMPATIBILITIES
+
+None known of, yet.
+
+=head1 BUGS AND LIMITATIONS
+
+Yes
+
+=head1 AUTHOR
+
+Louis B. Moore <lbmoore@cpan.org>
+
+=head1 LICENSE AND COPYRIGHT
+
+
+Copyright (C) 2015 Louis B. Moore <lbmoore@cpan.org>
+
+
+This program is released under the Artistic License 2.0 by The Perl Foundation.
+L<http://www.perlfoundation.org/artistic_license_2_0>
+
+
+=cut
 

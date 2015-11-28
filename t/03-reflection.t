@@ -1,10 +1,8 @@
 use strict;
 use warnings;
-use Test::More tests => 18;
+use Test::More tests => 24;
 use Flickr::Tools::Reflection;
 use 5.010;
-
-
 
 
 my $config_file;
@@ -48,6 +46,20 @@ my $tool = Flickr::Tools::Reflection->new(
 isa_ok($tool, 'Flickr::Tools::Reflection');
 
 is(
+    $tool->cache_duration,
+    900,
+    'Is the cache duration 900 seconds'
+);
+
+$tool->cache_duration(3600);
+
+is(
+    $tool->cache_duration,
+    3600,
+    'Is the cache duration 3600 seconds, now'
+);
+
+is(
     $tool->_api_name,
     "Flickr::API::Reflection",
     'Are we looking for the correct API'
@@ -56,7 +68,7 @@ is(
 is(
     $tool->has_api,
     '',
-    'Are we appropriately missing a Flickr::API object'
+    'Are we appropriately missing a Flickr::API::Reflection object'
 );
 
 $api = $tool->api;
@@ -66,7 +78,7 @@ isa_ok($api, $tool->_api_name);
 is(
     $api->is_oauth,
     1,
-    'Does Flickr::API object identify as OAuth'
+    'Does Flickr::API::Reflection object identify as OAuth, now that it exists'
 );
 
 
@@ -75,7 +87,7 @@ $ref = $rsp->as_hash();
 
 
 SKIP: {
-    skip "skipping method call checks, since we couldn't reach the API", 12
+    skip "skipping method call checks, since we couldn't reach the API", 16
         if $rsp->rc() ne '200';
     is(
         $ref->{'stat'},
@@ -106,13 +118,18 @@ SKIP: {
             unless defined($config_file) && (-r $config_file) ;
 
         if (-r $config_file) { $fileflag = 1; }
-        is($fileflag, 1, "Is the config file: $config_file, readable?");
+
+        is(
+            $fileflag,
+            1,
+            "Is the config file: $config_file, readable?"
+        );
 
     }
 
   SKIP: {
 
-        skip "Skipping reflection tests, oauth config isn't there or is not readable", 7
+        skip "Skipping reflection tests, oauth config isn't there or is not readable", 11
             if $fileflag == 0;
 
         $tool = Flickr::Tools::Reflection->new({config_file => $config_file});
@@ -150,15 +167,53 @@ SKIP: {
 
         my $methods = $tool->getMethods;
 
-        is(ref($methods), 'HASH', 'did we get a hashref by default');
+        is(
+            ref($methods),
+            'HASH',
+            'did we get a hashref by default'
+        );
+
+        is (
+            $tool->cache_hit,
+            0,
+            'did we go to Flickr on this call'
+        );
+
+        my $methods2 = $tool->getMethods;
+
+        is (
+            $tool->cache_hit,
+            1,
+            'did we get it from cache on this call'
+        );
+
+        is_deeply (
+            $methods,
+            $methods2,
+            'Do we get the same result downloaded and from cache'
+        );
 
         $methods = $tool->getMethods({list_type => 'List'});
 
-        is(ref($methods), 'ARRAY', 'did we get an arrayref when asked for one');
+        is(
+            ref($methods),
+            'ARRAY',
+            'did we get an arrayref when asked for one'
+        );
 
-        my $method = $tool->thisMethod('flickr.reflection.getMethodInfo');
+        is (
+            $tool->cache_hit,
+            0,
+            'did we go to Flickr on this call'
+        );
 
-        is(ref($method), 'HASH', 'did we get a hashref by default');
+        my $method = $tool->getMethod('flickr.reflection.getMethodInfo');
+
+        is(
+            ref($method),
+            'HASH',
+            'did we get a hashref by default'
+        );
 
     }
 }

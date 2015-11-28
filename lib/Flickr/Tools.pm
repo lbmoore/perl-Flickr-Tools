@@ -11,7 +11,7 @@ use Data::Dumper;
 use 5.010;
 use Carp;
 use Moo;
-use strictures 2;
+use strictures;
 use namespace::clean;
 
 our $VERSION = '1.21_04';

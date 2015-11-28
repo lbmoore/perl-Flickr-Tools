@@ -1,6 +1,6 @@
 package Flickr::Types::Tools;
 
-use strictures 2;
+use strictures;
 use Carp;
 
 our $VERSION = '1.21_04';
