@@ -1,6 +1,6 @@
 Revision history for Flickr-Tools
 
-1.21_04
+1.21_04 28 November 2015
  * Add fix for RT 109758
  * Add version dependency for Flickr::API
  * Added in a reflection tool
