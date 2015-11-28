@@ -6,7 +6,7 @@ use Types::Standard qw( Bool);
 use 5.010;
 use Moo::Role;
 
-our $VERSION = '1.21_04';
+our $VERSION = '1.22';
 
 has _permissions => (
     is        => 'rw',
@@ -137,9 +137,9 @@ Flickr::Roles::Permissions - Permission behaviors for the Flickr::Tools
 
 =head1 VERSION
 
-CPAN:        1.21
+CPAN:        1.22
 
-Development: 1.21_04
+Development: 1.22_01
 
 
 =head1 SYNOPSIS

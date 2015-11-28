@@ -9,7 +9,7 @@ use Moo;
 use strictures;
 use namespace::clean;
 
-our $VERSION = '1.21_04';
+our $VERSION = '1.22';
 
 has api => (
     is  => 'ro',

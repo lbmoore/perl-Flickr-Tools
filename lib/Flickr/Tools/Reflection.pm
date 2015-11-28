@@ -10,7 +10,7 @@ use 5.010;
 
 with qw(Flickr::Roles::Caching);
 
-our $VERSION = '1.21_04';
+our $VERSION = '1.22';
 
 extends 'Flickr::Tools';
 
@@ -112,9 +112,9 @@ method reflection
 
 =head1 VERSION
 
-CPAN:        1.21
+CPAN:        1.22
 
-Development: 1.21_04
+Development: 1.22_01
 
 
 =head1 SYNOPSIS

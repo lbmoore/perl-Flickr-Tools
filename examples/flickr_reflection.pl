@@ -10,7 +10,7 @@ use Getopt::Long;
 use Flickr::Tools::Reflection;
 use 5.010;
 
-our $VERSION = '1.21_04';
+our $VERSION = '1.22';
 
 my $cli_args = {};
 

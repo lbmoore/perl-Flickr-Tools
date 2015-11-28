@@ -14,7 +14,7 @@ use Moo;
 use strictures;
 use namespace::clean;
 
-our $VERSION = '1.21_04';
+our $VERSION = '1.22';
 
 with('Flickr::Roles::Permissions');
 
@@ -389,8 +389,8 @@ Flickr::Tools - Tools to assist using the Flickr API
 
 =head1 VERSION
 
-CPAN:        1.21
-Development: 1.21_04
+CPAN:        1.22
+Development: 1.22_01
 
 =head1 SYNOPSIS
 
