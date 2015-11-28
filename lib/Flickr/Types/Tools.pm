@@ -1,9 +1,9 @@
 package Flickr::Types::Tools;
 
-use strictures 2;
+use strictures;
 use Carp;
 
-our $VERSION = '1.21_03';
+our $VERSION = '1.21_04';
 
 use Type::Library
    -base,
@@ -63,7 +63,7 @@ Flickr::Types::Person Type definitions
 
 =head1 VERSION
 
-This document describes Flickr::Types Version 1.21_03
+This document describes Flickr::Types Version 1.21_04
 
 
 =head1 SYNOPSIS

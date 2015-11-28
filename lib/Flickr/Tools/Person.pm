@@ -6,10 +6,10 @@ use Types::Standard -types;
 use Type::Params qw( compile );
 use Carp;
 use Moo;
-use strictures 2;
+use strictures;
 use namespace::clean;
 
-our $VERSION = '1.21_03';
+our $VERSION = '1.21_04';
 
 has api => (
     is  => 'ro',

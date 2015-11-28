@@ -4,13 +4,13 @@ use Flickr::API::Cameras;
 use Types::Standard qw ( InstanceOf );
 use Carp;
 use Moo;
-use strictures 2;
+use strictures;
 use namespace::clean;
 use 5.010;
 
 with qw(Flickr::Roles::Caching);
 
-our $VERSION = '1.21_03';
+our $VERSION = '1.21_04';
 
 extends 'Flickr::Tools';
 
@@ -108,7 +108,7 @@ Flickr::Tools::Cameras - Perl interface to the Flickr::API for cameras
 
 CPAN:        1.21
 
-Development: 1.21_03
+Development: 1.21_04
 
 
 =head1 SYNOPSIS

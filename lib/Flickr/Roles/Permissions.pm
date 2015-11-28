@@ -6,7 +6,7 @@ use Types::Standard qw( Bool);
 use 5.010;
 use Moo::Role;
 
-our $VERSION = '1.21_03';
+our $VERSION = '1.21_04';
 
 has _permissions => (
     is        => 'rw',
@@ -127,3 +127,61 @@ no Moo::Role;
 1;
 
 __END__
+
+
+=pod
+
+=head1 NAME
+
+Flickr::Roles::Permissions - Permission behaviors for the Flickr::Tools
+
+=head1 VERSION
+
+CPAN:        1.21
+
+Development: 1.21_04
+
+
+=head1 SYNOPSIS
+
+=head2 in consuming package
+
+=head2 in calling script
+
+
+=head1 DESCRIPTION
+
+This module adds a permission role for the Flickr::Tools packages.
+
+=head1 PUBLIC ATTRIBUTES
+
+=head1 PRIVATE ATTRIBUTES
+
+=head1 DIAGNOSTICS
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+=head1 DEPENDENCIES
+
+Perl 5.10 and Moo.
+
+=head1 INCOMPATIBILITIES
+
+None known of, yet.
+
+=head1 BUGS AND LIMITATIONS
+
+Yes
+
+=head1 AUTHOR
+
+Louis B. Moore <lbmoore@cpan.org>
+
+=head1 LICENSE AND COPYRIGHT
+
+
+Copyright (C) 2015 Louis B. Moore <lbmoore@cpan.org>
+
+
+This program is released under the Artistic License 2.0 by The Perl Foundation.
+L<http://www.perlfoundation.org/artistic_license_2_0>
